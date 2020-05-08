@@ -1,18 +1,14 @@
 # taking the latest image from docker registry for Apache Httpd server
 FROM httpd:2.4
 
-#Below arg are used to create container user.
-ARG USER_NAME
-ARG HOST_USER_UID
-ARG HOST_USER_GID
 
-ENV	HCLTXAPP_USER=$USER_NAME \
-	HCLTXAPP_UID=$HOST_USER_UID \
-	HCLTXAPP_GID=$HOST_USER_GID \
+ENV	HCLTXAPP_USER=hcltxapp \
+	HCLTXAPP_UID=1010 \
+	HCLTXAPP_GID=1010 \
 	WEBHOOK_URL=http://tx-config-server:8888/update-resources
 	
-RUN groupadd -g $HOST_USER_GID $USER_NAME \
-    &&  useradd -m -u $HOST_USER_UID -g $HOST_USER_GID $USER_NAME \
+RUN groupadd -g $HCLTXAPP_GID $HCLTXAPP_USER \
+    &&  useradd -m -u $HCLTXAPP_UID -g $HCLTXAPP_GID $HCLTXAPP_USER \
     && apt-get update \
     && apt-get install -y git gitweb curl \
     && rm -rf /var/lib/apt/lists/* \
@@ -42,4 +38,3 @@ LABEL com.hcl.tx.manifest=$MANIFEST
 LABEL vendor=vendor1 cnf=CNF-Service-1
 
 CMD /./home/$HCLTXAPP_USER/start.sh
-
