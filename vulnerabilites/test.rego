@@ -5,7 +5,7 @@ disallowed_images := ["tomcat"]
 
 deny[msg] {
   input[i].Cmd == "from"
-  val := input[i].value
+  val := input[i].Value
   tag := split(val[i], ":")[1]
   contains(tag, disallowed_tags[_])
   
@@ -14,7 +14,7 @@ deny[msg] {
 
 deny[msg] {
   input[i].Cmd == "from"
-  val := input[i].value
+  val := input[i].Value
   image := split(val[i], ":")[0]
   contains(image, disallowed_images[_])
   
