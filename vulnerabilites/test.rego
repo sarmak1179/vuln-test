@@ -1,7 +1,7 @@
 package main
 
 disallowed_tags := ["latest"]
-disallowed_images := ["tomcat:8.0-alpine"]
+disallowed_images := ["tomcat"]
 
 deny[msg] {
   input[i].Cmd == "from"
@@ -18,5 +18,5 @@ deny[msg] {
   image := split(val[i], ":")[0]
   contains(image, disallowed_images[_])
   
-  msg = sprintf("[%s] tag is not allowed", [image])
+  msg = sprintf("[%s] image is not allowed", [image])
 }
