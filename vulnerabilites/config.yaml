@@ -4,7 +4,7 @@ metadataTest:
     - key: 'vendor'
       value: 'vendor1'
   exposedPorts: ["8080"]
-  cmd: ["catalina.sh" "run"]  
+  cmd: ["catalina.sh", "run"]  
 fileExistenceTests:
 - name: 'Root'
   path: '/usr/local/tomcat/webapps/sample.war'
