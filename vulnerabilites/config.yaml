@@ -2,7 +2,7 @@ schemaVersion: '2.0.0' # Make sure to test the latest schema version
 metadataTest:
   labels:
     - key: 'vendor'
-      value: 'vendor1'
+      value: 'vendor2'
   exposedPorts: ["8080"]
   cmd: ["catalina.sh", "run"]  
 fileExistenceTests:
