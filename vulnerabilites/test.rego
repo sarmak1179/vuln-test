@@ -1,7 +1,7 @@
 package main
 
 disallowed_tags := ["latest"]
-disallowed_images := ["tomcat"]
+disallowed_images := ["tomcat1"]
 
 deny[msg] {
   input[i].Cmd == "from"
