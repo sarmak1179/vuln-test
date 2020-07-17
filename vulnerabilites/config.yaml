@@ -15,7 +15,7 @@ fileExistenceTests:
   - name: 'entrypoint script'
     path: '/app/entrypoint.sh'
     shouldExist: true
-    permissions: '-rwxrwxr-x'
+    permissions: '-rwxr-xr-x'
     uid: 0
     gid: 0
     isExecutableBy: 'group'
@@ -33,8 +33,6 @@ metadataTest:
   env:
     - key: CONTAINER_STRUCTURE_TEST_DOWNLOAD_URL
       value: https://storage.googleapis.com/container-structure-test/latest/container-structure-test-linux-amd64
-    - key: APP_HOME
-      value: /app
   #exposedPorts: ["8080", "2345"]    
   volumes: ["/test-config"]
   workdir: "/test-config"
