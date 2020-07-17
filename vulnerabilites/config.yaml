@@ -1,12 +1,42 @@
-schemaVersion: '2.0.0' # Make sure to test the latest schema version
+schemaVersion: "2.0.0"
+
+commandTests:
+
+  - name: "container-structure-test installation"
+    setup: [["/app/entrypoint.sh"]]
+    command: "which"
+    args: ["container-structure-test"]
+    expectedOutput: ["/usr/local/bin/container-structure-test"]
+    excludedOutput: [".*Inst.*Security.* | .*Security.*Inst.*"]
+    expectedError: [""]
+    excludedError: ["Test exited with incorrect error code."]
+
+fileExistenceTests:
+  - name: 'entrypoint script'
+    path: '/app/entrypoint.sh'
+    shouldExist: true
+    permissions: '-rwxrwxr-x'
+    uid: 0
+    gid: 0
+    isExecutableBy: 'group'
+
+fileContentTests:  
+  - name: 'entrypoint script'
+    path: '/app/entrypoint.sh'
+    expectedContents: ['echo']
+    excludedContents: ['Bench-security']
+
 metadataTest:
   labels:
-    - key: 'vendor'
-      value: 'vendor1'
-  exposedPorts: ["8080"]
-  cmd: ["catalina.sh", "run"]  
-fileExistenceTests:
-- name: 'Root'
-  path: '/usr/local/tomcat/webapps/sample.war'
-  shouldExist: true
-  permissions: '-rw-r--r--' 
+    - key: maintainer
+      value: "devopscoe@hcl.com"
+  env:
+    - key: CONTAINER_STRUCTURE_TEST_DOWNLOAD_URL
+      value: https://storage.googleapis.com/container-structure-test/latest/container-structure-test-linux-amd64
+    - key: APP_HOME
+      value: /app
+  #exposedPorts: ["8080", "2345"]    
+  volumes: ["/test-config"]
+  workdir: "/test-config"
+  entrypoint: ["/app/entrypoint.sh"]
+  cmd: ["--help"]
